@@ -50,24 +50,24 @@ This project aims to create an interactive application that recognizes hand gest
 ## Run the Streamlit application:
   `streamlit run app.py`
 ## Application Functionality
-  -Hand Gesture Detection: The application uses the webcam to detect hand gestures.
-  -Drawing: Draw on the screen using specific hand gestures.
-  -Erasing: Clear the canvas with a hand gesture.
-  -AI Integration: Certain gestures trigger AI responses, which are displayed on the interface.
+  - Hand Gesture Detection: The application uses the webcam to detect hand gestures.
+  - Drawing: Draw on the screen using specific hand gestures.
+  - Erasing: Clear the canvas with a hand gesture.
+  - AI Integration: Certain gestures trigger AI responses, which are displayed on the interface.
 ## Contributing
   -We welcome contributions! Please follow these steps to contribute:
 
 ## Fork the repository.
-  -Create a new branch (git checkout -b feature-branch).
-  -Make your changes and commit them (git commit -m 'Add some feature').
-  -Push to the branch (git push origin feature-branch).
-  -Open a Pull Request.
+  - Create a new branch (git checkout -b feature-branch).
+  - Make your changes and commit them (git commit -m 'Add some feature').
+  - Push to the branch (git push origin feature-branch).
+  - Open a Pull Request.
 
 ## Acknowledgments
-  -OpenCV for the computer vision library.
-  -cvzone for the hand detection module.
-  -Google Generative AI for AI capabilities.
-  -Streamlit for the web interface framework.
+  - OpenCV for the computer vision library.
+  - cvzone for the hand detection module.
+  - Google Generative AI for AI capabilities.
+  - Streamlit for the web interface framework.
 
 
 
