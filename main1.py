@@ -6,6 +6,7 @@ import google.generativeai as genai
 from PIL import Image
 import streamlit as st
 
+# Streamlit configuration
 st.set_page_config(layout="wide")
 st.image('thelastofai.png')
 
@@ -18,7 +19,8 @@ with col2:
     st.title("Answer")
     output_text_area = st.empty()
 
-genai.configure(api_key="AIzaSyCXLBXYZ379LvqarcOzMfUaoSIpbSmbCzM")  # Replace with your actual API key
+# Google Generative AI configuration
+genai.configure(api_key="AIzaSyB276-hKMAXayPaHj0caoOXApV-1sr503M")  # Replace with your actual API key
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Initialize the webcam to capture video
@@ -30,13 +32,17 @@ cap.set(4, 720)
 detector = HandDetector(staticMode=False, maxHands=1, modelComplexity=1, detectionCon=0.7, minTrackCon=0.5)
 
 def getHandInfo(img):
-    hands, img = detector.findHands(img, draw=False, flipType=True)
-    if hands:
-        hand = hands[0]
-        lmList = hand["lmList"]
-        fingers = detector.fingersUp(hand)
-        return fingers, lmList
-    else:
+    try:
+        hands, img = detector.findHands(img, draw=False, flipType=True)
+        if hands:
+            hand = hands[0]
+            lmList = hand["lmList"]
+            fingers = detector.fingersUp(hand)
+            return fingers, lmList
+        else:
+            return None
+    except Exception as e:
+        st.error(f"An error occurred while detecting hands: {e}")
         return None
 
 def draw(info, prev_pos, canvas):
@@ -53,17 +59,24 @@ def draw(info, prev_pos, canvas):
 
 def sendToAI(model, canvas, fingers):
     if fingers == [1, 1, 1, 0, 0]:
-        pil_image = Image.fromarray(canvas)
-        response = model.generate_content(["Solve this math problem and explain it", pil_image])
-        return response.text
+        try:
+            pil_image = Image.fromarray(canvas)
+            response = model.generate_content(["Solve this math problem and explain it", pil_image])
+            return response.text
+        except Exception as e:
+            st.error(f"An error occurred while sending data to AI: {e}")
+            return ""
 
 prev_pos = None
 canvas = None
-image_combined = None
 output_text = ""
 
 while run:
     success, img = cap.read()
+    if not success or img is None:
+        st.error("Failed to capture image from camera.")
+        continue
+
     img = cv2.flip(img, 1)
 
     if canvas is None:
